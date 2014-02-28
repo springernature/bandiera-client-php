@@ -23,8 +23,14 @@ class GuzzleClient
             $body = $this->client->get($url)
                 ->send()
                 ->getBody(true);
-        } catch (\Guzzle\Http\Exception\CurlException $e) {
-            throw new ConnectionException('Could not connect to Bandiera Server.');
+        } catch (\Exception $e) {
+            if ($e instanceof \Guzzle\Http\Exception\CurlException ||
+                $e instanceof \Guzzle\Http\Exception\ClientErrorResponseException
+            ) {
+                throw new ConnectionException('Could not connect to Bandiera Server.');
+            }
         }
+
+        return $body;
     }
 }
