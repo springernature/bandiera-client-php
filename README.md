@@ -7,24 +7,24 @@ service.
 
 Create a `composer.json`:
 
-``json
+```json
 {
     "require": {
         "nature/bandiera-client-php": "~1.0"
     }
 }
-``
+```
 
 and run
 
-``bash
+```bash
 $ wget http://getcomposer.org/composer.phar
 $ php composer.phar install
-``
+```
 
 # Usage
 
-``php
+```php
 <?php
 
 include 'vendor/autoload.php';
@@ -34,7 +34,7 @@ $bandiera = new Nature\Bandiera\Client('http://bandiera.example.com');
 if ($bandiera->isEnabled("my_app", "super_new_feature")) {
     // show the super new feature!
 }
-``
+```
 
 # License
 
