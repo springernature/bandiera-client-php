@@ -19,12 +19,12 @@ class GuzzleClientSpec extends ObjectBehavior
 
     function it_should_bring_something()
     {
-        $this->getUrlContent('http://www.google.com')->shouldNotBe('');
+        $this->getUrlContent('http://www.google.com', [])->shouldNotBe('');
     }
 
     function it_should_raise_exception_on_error()
     {
         $this->shouldThrow('\Nature\Bandiera\Http\ConnectionException')
-            ->during('getUrlContent', array('http://invalid_domain/foo/bar'));
+            ->during('getUrlContent', array('http://invalid_domain/foo/bar', []));
     }
 }

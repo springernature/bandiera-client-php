@@ -14,10 +14,10 @@ class GuzzleClient
         $this->client = new Client(array('base_uri' => $domain));
     }
 
-    public function getUrlContent($url)
+    public function getUrlContent($url, $params)
     {
         try {
-            $body = $this->client->get($url)
+            $body = $this->client->get($url, ['query' => $params])
                 ->getBody();
         } catch (\Exception $e) {
             throw new ConnectionException('Could not connect to Bandiera Server.');

@@ -21,7 +21,7 @@ class ClientSpec extends ObjectBehavior
     {
         $json = '{"response": true}';
 
-        $http->getUrlContent('/api/v2/groups/foo/features/bar')
+        $http->getUrlContent('/api/v2/groups/foo/features/bar', [])
             ->willReturn($json);
 
         $this->isEnabled('foo', 'bar')->shouldReturn(true);
@@ -31,7 +31,7 @@ class ClientSpec extends ObjectBehavior
     {
         $json = '{"response": false}';
 
-        $http->getUrlContent('/api/v2/groups/foo/features/bar')
+        $http->getUrlContent('/api/v2/groups/foo/features/bar', [])
             ->willReturn($json);
 
         $this->isEnabled('foo', 'bar')->shouldReturn(false);
@@ -41,7 +41,7 @@ class ClientSpec extends ObjectBehavior
     {
         $json = '{"response":[{"foo": true}]}';
 
-        $http->getUrlContent('/api/v2/groups/foo/features')
+        $http->getUrlContent('/api/v2/groups/foo/features', [])
             ->willReturn($json);
 
         $this->getFeaturesForGroup('foo')->shouldReturn(array(
@@ -51,7 +51,7 @@ class ClientSpec extends ObjectBehavior
 
     function it_should_return_empty_array_if_group_does_not_exist($http)
     {
-        $http->getUrlContent('/api/v2/groups/bar/features')
+        $http->getUrlContent('/api/v2/groups/bar/features', [])
             ->willReturn(false);
 
         $this->getFeaturesForGroup('bar')->shouldReturn(array());
@@ -59,7 +59,7 @@ class ClientSpec extends ObjectBehavior
 
     function it_should_get_all($http)
     {
-        $http->getUrlContent('/api/v2/all')
+        $http->getUrlContent('/api/v2/all', [])
             ->willReturn('{"response":{"foo":{"bar":true},"bar":{"foo":false}}}');
 
         $this->getAll()->shouldReturn(
@@ -72,7 +72,7 @@ class ClientSpec extends ObjectBehavior
 
     function it_should_raise_exception_on_getAll_error($http)
     {
-        $http->getUrlContent('/api/v2/all')
+        $http->getUrlContent('/api/v2/all', [])
             ->willThrow('\Nature\Bandiera\Http\ConnectionException');
 
         $this->shouldThrow('\Nature\Bandiera\Http\ConnectionException')->during('getAll');
@@ -80,10 +80,10 @@ class ClientSpec extends ObjectBehavior
 
     function it_should_return_false_on_getFeature_error($http)
     {
-        $http->getUrlContent('/api/v2/groups/bar/features/foo')
+        $http->getUrlContent('/api/v2/groups/bar/features/foo', [])
             ->willThrow('\Nature\Bandiera\Http\ConnectionException');
 
-        $this->getFeature('bar', 'foo')->shouldReturn(array(
+        $this->getFeature('bar', 'foo', [])->shouldReturn(array(
             'group' => 'bar',
             'name'  => 'foo',
             'description' => '',

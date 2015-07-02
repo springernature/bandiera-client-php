@@ -13,29 +13,33 @@ class Client
         $this->http = $http ?: new GuzzleClient($domain);
     }
 
-    public function getAll()
+    public function getAll($params = array())
     {
         $return = array();
-        $features = $this->get('/api/v2/all');
+        $features = $this->get('/api/v2/all', $params);
 
         if (isset($features['response'])) {
             $return = $features['response'];
         }
 
+        if (isset($features['warning'])) {
+            $return['warning'] = $features['warning'];
+        }
+
         return $return;
     }
 
-    public function isEnabled($group, $feature)
+    public function isEnabled($group, $feature, $params = array())
     {
-        $feature = $this->getFeature($group, $feature);
+        $feature = $this->getFeature($group, $feature, $params);
 
         return $feature['enabled'];
     }
 
-    public function getFeaturesForGroup($group)
+    public function getFeaturesForGroup($group, $params = array())
     {
         $return = array();
-        $feature = $this->get('/api/v2/groups/' . $group . '/features');
+        $feature = $this->get('/api/v2/groups/' . $group . '/features', $params);
 
         if (isset($feature['response'])) {
             $return = $feature['response'];
@@ -54,7 +58,7 @@ class Client
         );
 
         try {
-            $feature = $this->get('/api/v2/groups/' . $group . '/features/' . $feature);
+            $feature = $this->get('/api/v2/groups/' . $group . '/features/' . $feature, $params);
         } catch (ConnectionException $e) {
             return $return_feature;
         }
@@ -70,11 +74,11 @@ class Client
         return $return_feature;
     }
 
-    private function get($uri)
+    private function get($uri, $params)
     {
         $default_return = array();
 
-        $json = json_decode($this->http->getUrlContent($uri), true);
+        $json = json_decode($this->http->getUrlContent($uri, $params), true);
 
         if (null !== $json) {
             $default_return = $json;
