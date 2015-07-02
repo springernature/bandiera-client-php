@@ -44,7 +44,7 @@ class Client
         return $return;
     }
 
-    public function getFeature($group, $feature)
+    public function getFeature($group, $feature, $params = array())
     {
         $return_feature = array(
             'group'       => $group,
