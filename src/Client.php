@@ -15,7 +15,14 @@ class Client
 
     public function getAll()
     {
-        return $this->get('/api/v1/all');
+        $return = array();
+        $features = $this->get('/api/v2/all');
+
+        if (isset($features['response'])) {
+            $return = $features['response'];
+        }
+
+        return $return;
     }
 
     public function isEnabled($group, $feature)
@@ -27,13 +34,14 @@ class Client
 
     public function getFeaturesForGroup($group)
     {
-        $features = $this->get('/api/v1/groups/' . $group . '/features');
+        $return = array();
+        $feature = $this->get('/api/v2/groups/' . $group . '/features');
 
-        if (isset($features['features'])) {
-            $features = $features['features'];
+        if (isset($feature['response'])) {
+            $return = $feature['response'];
         }
 
-        return $features;
+        return $return;
     }
 
     public function getFeature($group, $feature)
@@ -46,17 +54,17 @@ class Client
         );
 
         try {
-            $features = $this->get('/api/v1/groups/' . $group . '/features/' . $feature);
+            $feature = $this->get('/api/v2/groups/' . $group . '/features/' . $feature);
         } catch (ConnectionException $e) {
             return $return_feature;
         }
 
-        if (isset($features['features'])) {
-            foreach ($features['features'] as $f) {
-                if ($feature === $f['name']) {
-                    $return_feature = $f;
-                }
-            }
+        if (isset($feature['response'])) {
+            $return_feature['enabled'] = $feature['response'];
+        }
+
+        if (isset($feature['warning'])) {
+            $return_feature['warning'] = $feature['warning'];
         }
 
         return $return_feature;

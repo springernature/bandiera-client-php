@@ -17,7 +17,8 @@ class GuzzleClient
     public function getUrlContent($url)
     {
         try {
-            $body = $this->client->get($url);
+            $body = $this->client->get($url)
+                ->getBody();
         } catch (\Exception $e) {
             throw new ConnectionException('Could not connect to Bandiera Server.');
         }
