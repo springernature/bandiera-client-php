@@ -6,7 +6,7 @@ use Nature\Bandiera\Http\ConnectionException;
 
 class Client
 {
-    private $http   = null;
+    private $http = null;
 
     public function __construct($domain, $http = null)
     {
@@ -29,7 +29,7 @@ class Client
     {
         $features = $this->get('/api/v1/groups/' . $group . '/features');
 
-        if(isset($features['features'])) {
+        if (isset($features['features'])) {
             $features = $features['features'];
         }
 
@@ -51,8 +51,8 @@ class Client
             return $return_feature;
         }
 
-        if(isset($features['features'])) {
-            foreach($features['features'] as $f) {
+        if (isset($features['features'])) {
+            foreach ($features['features'] as $f) {
                 if ($feature === $f['name']) {
                     $return_feature = $f;
                 }
