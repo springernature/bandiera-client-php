@@ -11,13 +11,18 @@ class GuzzleClient
 
     public function __construct($domain)
     {
-        $this->client = new Client(array('base_uri' => $domain));
+        $this->client = new Client(['base_uri' => $domain]);
     }
 
-    public function getUrlContent($url)
+    public function getUrlContent($url, $params)
     {
+        if ($params !== []) {
+            $params = ['query' => $params];
+        }
+
         try {
-            $body = $this->client->get($url);
+            $body = $this->client->get($url, $params)
+                ->getBody();
         } catch (\Exception $e) {
             throw new ConnectionException('Could not connect to Bandiera Server.');
         }

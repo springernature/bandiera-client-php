@@ -13,60 +13,72 @@ class Client
         $this->http = $http ?: new GuzzleClient($domain);
     }
 
-    public function getAll()
+    public function getAll($params = [])
     {
-        return $this->get('/api/v1/all');
+        $return = [];
+        $features = $this->get('/api/v2/all', $params);
+
+        if (isset($features['response'])) {
+            $return = $features['response'];
+        }
+
+        if (isset($features['warning'])) {
+            $return['warning'] = $features['warning'];
+        }
+
+        return $return;
     }
 
-    public function isEnabled($group, $feature)
+    public function isEnabled($group, $feature, $params = [])
     {
-        $feature = $this->getFeature($group, $feature);
+        $feature = $this->getFeature($group, $feature, $params);
 
         return $feature['enabled'];
     }
 
-    public function getFeaturesForGroup($group)
+    public function getFeaturesForGroup($group, $params = [])
     {
-        $features = $this->get('/api/v1/groups/' . $group . '/features');
+        $return = [];
+        $feature = $this->get('/api/v2/groups/' . $group . '/features', $params);
 
-        if (isset($features['features'])) {
-            $features = $features['features'];
+        if (isset($feature['response'])) {
+            $return = $feature['response'];
         }
 
-        return $features;
+        return $return;
     }
 
-    public function getFeature($group, $feature)
+    public function getFeature($group, $feature, $params = [])
     {
-        $return_feature = array(
+        $return_feature = [
             'group'       => $group,
             'name'        => $feature,
             'description' => '',
             'enabled'     => false
-        );
+        ];
 
         try {
-            $features = $this->get('/api/v1/groups/' . $group . '/features/' . $feature);
+            $feature = $this->get('/api/v2/groups/' . $group . '/features/' . $feature, $params);
         } catch (ConnectionException $e) {
             return $return_feature;
         }
 
-        if (isset($features['features'])) {
-            foreach ($features['features'] as $f) {
-                if ($feature === $f['name']) {
-                    $return_feature = $f;
-                }
-            }
+        if (isset($feature['response'])) {
+            $return_feature['enabled'] = $feature['response'];
+        }
+
+        if (isset($feature['warning'])) {
+            $return_feature['warning'] = $feature['warning'];
         }
 
         return $return_feature;
     }
 
-    private function get($uri)
+    private function get($uri, $params)
     {
-        $default_return = array();
+        $default_return = [];
 
-        $json = json_decode($this->http->getUrlContent($uri), true);
+        $json = json_decode($this->http->getUrlContent($uri, $params), true);
 
         if (null !== $json) {
             $default_return = $json;
