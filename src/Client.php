@@ -13,9 +13,9 @@ class Client
         $this->http = $http ?: new GuzzleClient($domain);
     }
 
-    public function getAll($params = array())
+    public function getAll($params = [])
     {
-        $return = array();
+        $return = [];
         $features = $this->get('/api/v2/all', $params);
 
         if (isset($features['response'])) {
@@ -29,16 +29,16 @@ class Client
         return $return;
     }
 
-    public function isEnabled($group, $feature, $params = array())
+    public function isEnabled($group, $feature, $params = [])
     {
         $feature = $this->getFeature($group, $feature, $params);
 
         return $feature['enabled'];
     }
 
-    public function getFeaturesForGroup($group, $params = array())
+    public function getFeaturesForGroup($group, $params = [])
     {
-        $return = array();
+        $return = [];
         $feature = $this->get('/api/v2/groups/' . $group . '/features', $params);
 
         if (isset($feature['response'])) {
@@ -48,14 +48,14 @@ class Client
         return $return;
     }
 
-    public function getFeature($group, $feature, $params = array())
+    public function getFeature($group, $feature, $params = [])
     {
-        $return_feature = array(
+        $return_feature = [
             'group'       => $group,
             'name'        => $feature,
             'description' => '',
             'enabled'     => false
-        );
+        ];
 
         try {
             $feature = $this->get('/api/v2/groups/' . $group . '/features/' . $feature, $params);
@@ -76,7 +76,7 @@ class Client
 
     private function get($uri, $params)
     {
-        $default_return = array();
+        $default_return = [];
 
         $json = json_decode($this->http->getUrlContent($uri, $params), true);
 
