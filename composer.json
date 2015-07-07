@@ -1,7 +1,9 @@
 {
     "name": "nature/bandiera-client-php",
-    "description": "Feature Flagging",
+    "description": "Bandiera is a simple, stand-alone feature flagging service that is not tied to any existing web framework or language. This is a client for talking to the web service."
     "type": "library",
+    "keywords": ["feature", "flag", "feature flagging", "feature toggle"],
+    "homepage": "https://github.com/nature/bandiera",
     "license": "MIT",
     "authors": [
         {
@@ -11,7 +13,7 @@
         }
     ],
     "require": {
-        "php": ">=5.3.2",
+        "php": ">=5.5.0",
         "guzzlehttp/guzzle": "~6.0"
     },
     "require-dev": {
