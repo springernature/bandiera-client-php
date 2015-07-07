@@ -1,5 +1,5 @@
 {
-    "name": "nature/bandiera-client-php",
+    "name": "npg/bandiera-client-php",
     "description": "Bandiera is a simple, stand-alone feature flagging service that is not tied to any existing web framework or language. This is a client for talking to the web service.",
     "type": "library",
     "keywords": ["feature", "flag", "feature flagging", "feature toggle"],

@@ -14,7 +14,7 @@ Installation is done via composer. In your `composer.json` file add:
 ```json
 {
     "require": {
-        "nature/bandiera-client-php": "~1.0"
+        "npg/bandiera-client-php": "~1.0"
     }
 }
 ```
