@@ -54,7 +54,7 @@ $bandiera->isEnabled('my_app', 'super_new_feature', [
 
 For more information on these advanced features, please see the Bandiera wiki:
 
-https://github.com/nature/bandiera/wiki/How-Feature-Flags-Work#feature-flags-in-bandiera
+https://github.com/springernature/bandiera/wiki/How-Feature-Flags-Work#feature-flags-in-bandiera
 
 # Direct API Access
 
@@ -85,14 +85,13 @@ Nature\Bandiera\Client::getFeature($group, $feature, $params = []);
 
 # License
 
-[&copy; 2014 Nature Publishing Group](LICENSE.txt).
+[&copy; 2014 Springer Nature](LICENSE.txt).
 Bandiera PHP Client is licensed under the [MIT License][mit].
 
 [mit]: http://opensource.org/licenses/mit-license.php
-[bandiera]: https://github.com/nature/bandiera
-[bandiera-api]: https://github.com/nature/bandiera/wiki/API-Documentation
+[bandiera]: https://github.com/springernature/bandiera
+[bandiera-api]: https://github.com/springernature/bandiera/wiki/API-Documentation
 [info-license]: LICENSE
-[shield-dependencies]: https://img.shields.io/gemnasium/nature/bandiera-client-ruby.svg
-[info-build]: https://travis-ci.org/nature/bandiera-client-php
+[info-build]: https://travis-ci.org/springernature/bandiera-client-php
 [shield-license]: https://img.shields.io/badge/license-MIT-blue.svg
-[shield-build]: https://img.shields.io/travis/nature/bandiera-client-php/master.svg
+[shield-build]: https://img.shields.io/travis/springernature/bandiera-client-php/master.svg
